@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { LocationGeocodedAddress } from 'expo-location'
 import { Dispatch } from 'react'
-import { BASE_URL } from '../../utils'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FoodModel } from '../models'
 
@@ -30,11 +29,8 @@ export interface UserLoginAction{
 export type UserAction = UpdateLocationAction | UserErrorAction | UpdateCartAction | UserLoginAction;
 
 // User Actions trigger from Components
-
 export const onUpdateLocation = (location: LocationGeocodedAddress) => {
-
     return async ( dispatch: Dispatch<UserAction>) => {
-
         try {
             const locationString = JSON.stringify(location)
             await AsyncStorage.setItem('user_location', locationString)
@@ -50,7 +46,5 @@ export const onUpdateLocation = (location: LocationGeocodedAddress) => {
                 payload: error
             })
         }
-
     }
-
 }

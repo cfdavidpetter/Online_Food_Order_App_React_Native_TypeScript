@@ -8,7 +8,6 @@ export interface Category{
     icon: String
 }
 
-
 // Food Model
 export interface FoodModel{
     _id: string;

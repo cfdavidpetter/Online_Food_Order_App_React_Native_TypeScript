@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { createAppContainer, createSwitchNavigator  } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
@@ -9,13 +9,16 @@ import { store } from './src/redux'
 
 import { LandingScreen } from "./src/screens/LandingScreen";
 import { HomeScreen } from "./src/screens/HomeScreen";
+import { SearchScreen } from './src/screens/SearchScreen';
+import { RestaurantScreen } from "./src/screens/RestaurantScreen";
+import { FoodDetailScreen } from "./src/screens/FoodDetailScreen";
 
 
 const switchNavigator = createSwitchNavigator({
   landingStack: {
     screen: createStackNavigator({
       Landing: LandingScreen,
-    },{
+    }, {
       defaultNavigationOptions: {
         headerShown: false
       }
@@ -23,9 +26,12 @@ const switchNavigator = createSwitchNavigator({
   },
   homeStack:  createBottomTabNavigator({
     // Home tab Icon
-    Home: {
+    Inicio: {
       screen: createStackNavigator({
         HomePage: HomeScreen,
+        SearchPage: SearchScreen,
+        RestaurantPage: RestaurantScreen,
+        FoodDetailPage: FoodDetailScreen
       },{
         defaultNavigationOptions: {
           headerShown: false
@@ -39,7 +45,7 @@ const switchNavigator = createSwitchNavigator({
       }
     },
 
-    Offer: {
+    Promoções: {
       screen: createStackNavigator({
         OfferPage: HomeScreen,
       }),
@@ -51,7 +57,7 @@ const switchNavigator = createSwitchNavigator({
       }
     },
 
-    Cart: {
+    Carrinho: {
       screen: createStackNavigator({
         CartPage: HomeScreen,
       }, {
@@ -67,7 +73,7 @@ const switchNavigator = createSwitchNavigator({
       }
     },
 
-    Account: {
+    Conta: {
       screen: createStackNavigator({
         AccountPage: HomeScreen,
       }),
@@ -94,10 +100,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#F7CC0F'
   },
   tabIcon: {
     width: 30,
