@@ -23,7 +23,7 @@ const switchNavigator = createSwitchNavigator({
   },
   homeStack:  createBottomTabNavigator({
     // Home tab Icon
-    home: {
+    Home: {
       screen: createStackNavigator({
         HomePage: HomeScreen,
       },{

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { onAvailability, onSearchFoods ,UserState, ApplicationState, ShoppingState, Restaurant, FoodModel } from '../redux'
 import { useNavigation } from '../utils'
+
+import { SearchBar, ButtonWithIcon } from '../components'
  
 interface HomeProps{
     userReducer: UserState,
@@ -13,16 +15,28 @@ interface HomeProps{
 
 
 const _HomeScreen: React.FC<HomeProps> = (props) => {
-
     const { location } = props.userReducer;
     const { availability } = props.shoppingReducer;
+    const { categories, foods, restaurants } = availability
+
+    const { navigate } = useNavigation()
+
+    useEffect(() => {
+        props.onAvailability(location.postalCode)
+    }, [])
 
     return (
         <View style={style.contaner}>
             <View style={style.navigator}>
-                <View style={style.navigator_location}>
+                <View style={style.navigatorLocation}>
                     <Text>{`${location.street}, ${location.name}, ${location.district} - ${location.city}`} </Text> 
-                    <Text> Edit</Text>
+                    <Text>Edit</Text>
+                </View>
+                <View style={style.navigatorSearchBar}>
+                    <SearchBar didTouch={() => {
+                        navigate('SearchBar')
+                    }} onTextChange={() => {}} />
+                    <ButtonWithIcon onTap={() => {}} icon={require('../images/hambar.png')} width={50} height={40} />
                 </View>
             </View>
             <View style={style.body}>
@@ -44,8 +58,8 @@ const style = StyleSheet.create({
         flex: 2,
         backgroundColor: '#0F84FA'
     },
-    navigator_location: {
-        marginTop: 50, 
+    navigatorLocation: {
+        marginTop: 40, 
         flex: 4, 
         backgroundColor: 'white', 
         paddingLeft: 20, 
@@ -53,6 +67,14 @@ const style = StyleSheet.create({
         alignItems: 'center', 
         justifyContent: 'center', 
         flexDirection: 'row'
+    },
+    navigatorSearchBar: {
+        display: 'flex', 
+        height: 40, 
+        justifyContent: 'space-around', 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        marginLeft: 4
     },
     body: {
         flex: 9,
