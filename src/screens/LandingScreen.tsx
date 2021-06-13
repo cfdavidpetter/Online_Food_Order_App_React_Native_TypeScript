@@ -6,9 +6,15 @@ import { useNavigation } from '../utils'
 import { connect } from 'react-redux'
 import { onUpdateLocation, UserState, ApplicationState } from '../redux'
 
-//const screenWidth = Dimensions.get('screen').width
+interface LandingProps{
+    userReducer: UserState,
+    onUpdateLocation: Function
+}
 
-const _LandingScreen = () => {
+
+const _LandingScreen: React.FC<LandingProps> = (props) => {
+    const { userReducer, onUpdateLocation }  = props;    
+
     const [errorMsg, setErrorMsg] = useState("")
     const [address, setAddress] = useState<Location.LocationGeocodedAddress>()
     const [displayAddress, setDisplayAddress] = useState("Esperando pela localização atual...")
@@ -30,8 +36,24 @@ const _LandingScreen = () => {
                 let addressResponse: any = await Location.reverseGeocodeAsync({ latitude, longitude })
 
                 for(let item of addressResponse){
-                    setAddress(item)
-                    let currentAddress = `${item.name},${item.street},${item.postalCode},${item.country}`
+
+                    let dataLocation = {
+                        "city": item.city !== null ? item.city : item.subregion,
+                        "country": item.country,
+                        "district": item.district,
+                        "isoCountryCode": item.isoCountryCode,
+                        "name": item.name,
+                        "postalCode": item.postalCode,
+                        "region": item.region,
+                        "street":item.street,
+                        "subregion": item.subregion,
+                        "timezone": item.timezone,
+                    }
+
+                    setAddress(dataLocation)
+                    onUpdateLocation(dataLocation)
+
+                    let currentAddress = `${dataLocation.postalCode}, ${dataLocation.street}, ${dataLocation.name}, ${dataLocation.district}, ${dataLocation.city}, ${dataLocation.country}`
                     setDisplayAddress(currentAddress)
 
                     if(currentAddress.length > 0){
