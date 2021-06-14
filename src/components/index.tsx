@@ -7,3 +7,4 @@ export * from './FoodCard'
 export * from './FoodCartInfo';
 export * from './ButtonWithIcon';
 export * from './TextField';
+export * from './HeaderSubPage';

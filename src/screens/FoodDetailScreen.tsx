@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image, ImageBackground, Dimensions } from 'react-native'
-import { ButtonWithIcon, FoodCard } from '../components';
+import { ButtonWithIcon, FoodCard, HeaderSubPage } from '../components';
 import { ApplicationState, FoodModel, onUpdateCart, UserState } from '../redux';
 import { connect } from 'react-redux';
 
@@ -20,10 +20,7 @@ const _FoodDetailScreen: React.FC<FoodDetailProps> = (props) => {
  
     return (
         <View style={styles.container}>
-            <View style={styles.navigation}>
-                <ButtonWithIcon icon={require('../images/back_arrow.png')} onTap={() => goBack()} width={42} height={42} />
-                <Text style={{ fontSize: 22, fontWeight: '600', marginLeft: 60}}> {food.name}</Text>
-            </View>
+            <HeaderSubPage title={food.name} navigation={props.navigation} />
             <View style={styles.body}>
                 <ImageBackground 
                     source={{ uri: `${food.images[0]}`}}
@@ -34,7 +31,7 @@ const _FoodDetailScreen: React.FC<FoodDetailProps> = (props) => {
                     <Text style={{ color: '#FFF', fontSize: 25, fontWeight: '500' }} > {food.category} </Text>
                 </View>
                 </ImageBackground>  
-                <View style={{ display: 'flex', height: 300, padding: 20}}> 
+                <View style={{ display: 'flex', padding: 20}}> 
                     <Text> Food Will be ready within {food.readyTime}  Minite(s)</Text>
                     <Text>{food.description} </Text>
                 </View> 

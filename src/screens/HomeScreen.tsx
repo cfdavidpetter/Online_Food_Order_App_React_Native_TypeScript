@@ -53,6 +53,7 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
             <View style={styles.body}>
                 <ScrollView>
                     <FlatList 
+                        style={{ marginLeft: 5 }}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         data={categories}
@@ -65,6 +66,7 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
                     </View>
 
                     <FlatList 
+                        style={{ marginLeft: 5 }}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         data={restaurants}
@@ -77,6 +79,7 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
                     </View>
 
                     <FlatList 
+                        style={{ marginLeft: 5 }}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         data={foods}

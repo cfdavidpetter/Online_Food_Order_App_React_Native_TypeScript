@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image, ImageBackground, Dimensions } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler';
-import { ButtonWithIcon, FoodCard } from '../components';
+import { ButtonWithIcon, FoodCard, HeaderSubPage } from '../components';
 
 import { connect } from 'react-redux';
 
@@ -31,10 +31,7 @@ const _RestaurantScreen: React.FC<RestaurantProps> = (props) => {
   
     return (
         <View style={styles.container}>
-            <View style={styles.navigation}>
-                <ButtonWithIcon icon={require('../images/back_arrow.png')} onTap={() => goBack()} width={42} height={42} />
-                    <Text style={{ fontSize: 22, fontWeight: '600', marginLeft: 80}}> {restaurant.name}</Text>
-            </View>
+            <HeaderSubPage title={restaurant.name} navigation={props.navigation} />
             <View style={styles.body}>
                 <ImageBackground 
                     source={{ uri: `${restaurant.images[0]}`}}
