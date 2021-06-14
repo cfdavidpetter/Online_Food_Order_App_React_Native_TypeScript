@@ -1,8 +1,6 @@
 
 import { FoodModel } from '../redux'
 
-
-
 const checkExistence = (item: FoodModel, Cart: [FoodModel]) => {
 
     if(Array.isArray(Cart)){
@@ -13,7 +11,8 @@ const checkExistence = (item: FoodModel, Cart: [FoodModel]) => {
             return currentItem[0]
         }
     }
-   return item;
+    
+    return item;
 }
 
 export { checkExistence };
