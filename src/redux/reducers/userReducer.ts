@@ -1,3 +1,4 @@
+
 import { LocationGeocodedAddress } from 'expo-location'
 import {  UserAction} from '../actions'
 import { UserModel, UserState, FoodModel } from '../models'

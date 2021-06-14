@@ -1,4 +1,4 @@
-import { LocationGeocodedAddress } from 'expo-location'
+import { Address } from 'expo-location'
 
 
 // category
@@ -49,10 +49,10 @@ export interface UserModel{
  
 export interface UserState{
     user: UserModel;
-    location: LocationGeocodedAddress;
+    location: Address;
     error: string | undefined;
     Cart: [FoodModel];
-    //orders
+     //orders
 }
 
 export interface ShoppingState{

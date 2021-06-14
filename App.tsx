@@ -37,7 +37,7 @@ const switchNavigator = createSwitchNavigator({
           headerShown: false
         }
       }),
-      navigationOptions: {
+      navigationOptions: {          
         tabBarIcon: ({ focused, tintColor}) => {
           let icon = focused == true ? require('./src/images/home_icon.png') : require('./src/images/home_n_icon.png') 
           return <Image source={icon} style={styles.tabIcon} />
@@ -93,7 +93,7 @@ const AppNavigation = createAppContainer(switchNavigator);
 export default function App() {
   return (
     <Provider store={store}>
-      <AppNavigation />
+      <AppNavigation style={styles.container} />
     </Provider>
   );
 }

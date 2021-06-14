@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image } from 'react-native'
+import React from 'react'
+import { StyleSheet, View, TextInput, Image } from 'react-native'
 
 interface SearchBarProps{
     onEndEditing?: any | undefined;
@@ -12,10 +12,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onEndEditing, didTouch, autoFocus
     return (
         <View style={styles.container}>
             <View style={styles.searchBar}>
-                <Image style={styles.searchIcon} source={require('../images/search.png')}/>
+                <Image style={{width: 20, height: 20, marginLeft: 5 }} source={require('../images/search.png')}/>
                 <TextInput 
-                    style={styles.searchInput}
-                    placeholder={"Pesquisar"}
+                    style={{  marginLeft: 5, flex: 9, display: 'flex', fontSize: 20, height: 42 }}
+                    placeholder={"Procurar"}
                     autoFocus={autoFocus}
                     onTouchStart={didTouch}
                     onChangeText={(text) => onTextChange(text)}
@@ -35,8 +35,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignContent: 'center',
         alignItems: 'center',
-        paddingLeft: 20,
-        paddingRight: 20
     },
     searchBar: {
         display: 'flex',
@@ -47,21 +45,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#ededed',
         alignItems: 'center',
         borderRadius: 20,
-        paddingLeft: 10,
         paddingRight: 10,
         borderColor: '#E5E5E5',
         borderWidth: 2
-    },
-    searchIcon: {
-        width: 18, 
-        height: 18
-    },
-    searchInput: {
-        marginLeft: 5, 
-        flex: 9, 
-        display: 'flex', 
-        fontSize: 20, 
-        height: 42
     }
 })
 

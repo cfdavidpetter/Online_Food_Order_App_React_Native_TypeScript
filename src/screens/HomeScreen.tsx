@@ -1,10 +1,10 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
-import { View, Text, StyleSheet, Dimensions, Image, ScrollView, FlatList } from "react-native";
+import { ButtonWithIcon, CategoryCard, SearchBar, RestaurantCard } from '../components'
 import { onAvailability, onSearchFoods ,UserState, ApplicationState, ShoppingState, Restaurant, FoodModel } from '../redux'
 import { useNavigation } from '../utils'
-
-import { SearchBar, ButtonWithIcon, CategoryCard, RestaurantCard } from '../components'
  
 interface HomeProps{
     userReducer: UserState,
@@ -13,14 +13,13 @@ interface HomeProps{
     onSearchFoods: Function
 }
 
-
-const _HomeScreen: React.FC<HomeProps> = (props) => {
+export const _HomeScreen: React.FC<HomeProps> = (props) => {
     const { location } = props.userReducer;
     const { availability } = props.shoppingReducer;
     const { categories, foods, restaurants } = availability
-
+    
     const { navigate } = useNavigation()
-
+ 
     useEffect(() => {
         props.onAvailability(location.postalCode)
         setTimeout(() => {
@@ -37,20 +36,21 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
     }
 
     return (
-        <View style={style.contaner}>
-            <View style={style.navigator}>
-                <View style={style.navigatorLocation}>
-                    <Text style={{ color: '#e45d2d' }}>{`${location.street}, ${location.name}, ${location.district} - ${location.city}`} </Text> 
-                    <Text style={{ color: '#e45d2d' }}>Edit</Text>
+        <View style={styles.container}>
+            <View> 
+                <View style={{ marginTop: 50, marginLeft: 15, height: 25, alignItems: 'center', flexDirection: 'row'}}>
+                    <Text>{`${location.street} - ${location.name}, ${location.district} - ${location.city}`}</Text> 
                 </View>
-                <View style={style.navigatorSearchBar}>
+                <View style={{ display: 'flex', height: 60, justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginRight: 15 }}>
                     <SearchBar didTouch={() => {
                         navigate('SearchPage')
                     }}  onTextChange={() => {}} />
+                    <View style={{ width: 10 }} />
                     <ButtonWithIcon onTap={() => {}} icon={require('../images/hambar.png')} width={50} height={40} />
                 </View>
             </View>
-            <View style={style.body}>
+            
+            <View style={styles.body}>
                 <ScrollView>
                     <FlatList 
                         horizontal
@@ -59,9 +59,9 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
                         renderItem ={({ item }) =>  <CategoryCard item={item} onTap={() => { alert('Category tapped') }} /> } 
                         keyExtractor={(item) => `${item.id}`}
                     />
-                
+
                     <View>
-                        <Text style={{fontSize: 25, fontWeight: '600', color: '#e45d2d', marginLeft: 10 }} >Melhores Restaurantes</Text>
+                        <Text style={{fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 10 }} >Melhores Restaurantes</Text>
                     </View>
 
                     <FlatList 
@@ -73,7 +73,7 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
                     />
 
                     <View>
-                        <Text style={{fontSize: 25, fontWeight: '600', color: '#e45d2d', marginLeft: 10 }} >Pronto em 30 Minutos</Text>
+                        <Text style={{fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 10 }} >Pronto em 30 Minutos</Text>
                     </View>
 
                     <FlatList 
@@ -83,49 +83,23 @@ const _HomeScreen: React.FC<HomeProps> = (props) => {
                         renderItem ={({ item }) =>  <RestaurantCard item={item} onTap={onTapFood} /> } 
                         keyExtractor={(item) => `${item._id}`}
                     />
-
                 </ScrollView>
             </View>
-        </View>
+         </View>
     )
 }
 
-const style = StyleSheet.create({
-    contaner: {
+const styles = StyleSheet.create({
+
+    container: {
         flex: 1,
-        backgroundColor: '#F7CC0F'
-    },
-    navigator: {
-        flex: 2,
-    },
-    navigatorLocation: {
-        marginTop: 40, 
-        flex: 4,
-        paddingLeft: 20, 
-        paddingRight: 20, 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        flexDirection: 'row'
-    },
-    navigatorSearchBar: {
-        display: 'flex', 
-        height: 40, 
-        justifyContent: 'space-around', 
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        marginLeft: 5,
-        marginRight: 15,
+        backgroundColor: '#FFF'
     },
     body: {
-        flex: 9,
+        flex: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 5
-    },
-    footer: {
-        flex: 1,
-        backgroundColor: '#49F70F'
-    }
+     },
 })
 
 const mapToStateProps = (state: ApplicationState) => ({

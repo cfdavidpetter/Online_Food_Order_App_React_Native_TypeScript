@@ -1,39 +1,40 @@
-import React, { useState, useReducer, useEffect } from "react"
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native"
-import * as Location from "expo-location"
-import { useNavigation } from '../utils'
-
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, Dimensions , Image } from 'react-native'
+import * as Location from 'expo-location'
 import { connect } from 'react-redux'
 import { onUpdateLocation, UserState, ApplicationState } from '../redux'
+import { useNavigation } from '../utils'
+
+const screenWidth = Dimensions.get('screen').width
 
 interface LandingProps{
     userReducer: UserState,
     onUpdateLocation: Function
 }
 
-
 const _LandingScreen: React.FC<LandingProps> = (props) => {
-    const { userReducer, onUpdateLocation }  = props;    
-
+    const { userReducer, onUpdateLocation }  = props;
+     
     const [errorMsg, setErrorMsg] = useState("")
     const [address, setAddress] = useState<Location.LocationGeocodedAddress>()
+    
     const [displayAddress, setDisplayAddress] = useState("Esperando pela localização atual...")
 
     const { navigate } = useNavigation()
 
     useEffect(() => {
-        (async () => { //PermissionsAsync
-            let { status } = await Location.requestForegroundPermissionsAsync()
-            if (status !== 'granted') {
-                setErrorMsg('Premission to access location is not granted')
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted'){
+                setErrorMsg('A permissão para acessar o local não foi concedida')
             }
 
-            let location: any = await Location.getCurrentPositionAsync({})
+            let location: any = await Location.getCurrentPositionAsync({});
             const { coords } = location
-            
-            if (coords) {
-                const { latitude, longitude } = coords
-                let addressResponse: any = await Location.reverseGeocodeAsync({ latitude, longitude })
+
+            if(coords){
+                const { latitude, longitude} = coords;
+                let addressResponse: any = await Location.reverseGeocodeAsync({ latitude, longitude})
 
                 for(let item of addressResponse){
 
@@ -59,81 +60,76 @@ const _LandingScreen: React.FC<LandingProps> = (props) => {
                     if(currentAddress.length > 0){
                         setTimeout(() =>{
                             navigate('homeStack')
-                        }, 2000)
+                        }, 5000)
                     }
 
-                    return
+                    return;
                 }
-            } else {
-                // ...
-                console.log('...');
+            }else{
+                //notify user something went wrong with location
             }
-        })()
+        })();
     }, [])
 
     return (
-        <View style={style.contaner}>
-            <View style={style.navigator} />
-
-            <View style={style.body}>
-                <Image source={require('../images/delivery_icon.png')} style={style.logo} />
-                <View style={style.view_title}>
-                    <Text style={style.title}>The Best Delivery Itajaí</Text>
+        <View style={styles.container}>
+            <View style={styles.navigation} /> 
+                
+            <View style={styles.body}>
+                <Image source={require('../images/delivery_icon.png')} style={styles.deliveryIcon} />
+                <View style={styles.addressContainer}>
+                    <Text style={styles.addressTitle}>O Melhor Delivery Itajaí</Text>
                 </View>
-                <View style={style.view_address}> 
-                    <Text style={style.address}>{displayAddress}</Text>
+                <View style={styles.addressDisplayAddress}>
+                    <Text style={styles.addressText}>{displayAddress}</Text>
                 </View>
             </View>
-
-            <View style={style.footer} />
+            <View style={styles.footer} />
         </View>
     )
 }
 
-const style = StyleSheet.create({
-    contaner: {
+const styles = StyleSheet.create({
+    container: {
         flex: 1,
-        backgroundColor: '#F7CC0F'
+        backgroundColor: 'rgba(242,242,242,1)'
     },
-    navigator: {
+    navigation: {
         flex: 2,
-        backgroundColor: '#F7CC0F'
     },
     body: {
         flex: 9,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F7CC0F'
     },
-    logo: {
+    deliveryIcon:{
         width: 120,
         height: 120
     },
-    view_title: {
-        marginTop: 10,
-        width: 200
+    addressContainer: {
+        width: screenWidth - 100,
+        borderBottomColor: 'red',
+        borderBottomWidth: 0.5,
+        padding: 5,
+        marginBottom: 5,
+        alignItems: 'center',
+        
     },
-    view_address: {
-        borderTopColor: '#fff',
-        borderTopWidth: 2,
-        paddingTop: 4,
-        marginTop: 10,
-        width: 200
+    addressDisplayAddress: {
+        width: screenWidth - 100
     },
-    title: {
-        fontStyle: 'italic',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        color: '#e45d2d',
-        fontSize: 30,
+    addressTitle:{
+        fontSize: 22,
+        fontWeight: '700',
+        color: '#7D7D7D'
     },
-    address: {
-        color: '#000',
-        fontSize: 16
+    addressText: {
+        fontSize: 16,
+        fontWeight: '200',
+        color: '#4F4F4F'
     },
     footer: {
         flex: 1,
-        backgroundColor: '#F7CC0F'
     }
 })
 

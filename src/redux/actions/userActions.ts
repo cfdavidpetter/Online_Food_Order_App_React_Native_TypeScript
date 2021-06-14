@@ -3,18 +3,17 @@ import { LocationGeocodedAddress } from 'expo-location'
 import { Dispatch } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FoodModel } from '../models'
+import { BASE_URL } from '../../utils';
 
 export interface UpdateLocationAction{
     readonly type: 'ON_UPDATE_LOCATION',
     payload: LocationGeocodedAddress
 }
 
-
 export interface UserErrorAction{
     readonly type: 'ON_USER_ERROR',
     payload: any
 }
-
 
 export interface UpdateCartAction{
     readonly type: 'ON_UPDATE_CART',
@@ -44,6 +43,73 @@ export const onUpdateLocation = (location: LocationGeocodedAddress) => {
             dispatch({
                 type: 'ON_USER_ERROR',
                 payload: error
+            })
+        }
+    }
+}
+
+export const onUpdateCart = (item: FoodModel) => {    
+    return async ( dispatch: Dispatch<UserAction>) => {
+        dispatch({
+            type: 'ON_UPDATE_CART',
+            payload: item
+        })
+    }
+}
+
+export const OnUserLogin = (email: string, password: string) => {
+    return async ( dispatch: Dispatch<UserAction>) => {
+        try {
+             const response = await axios.post<string>(`${BASE_URL}user/login`, {
+                email,
+                password
+            })
+
+            if(!response){
+                dispatch({
+                    type: 'ON_USER_ERROR',
+                    payload: 'Login Error'
+                })
+            }else{
+                dispatch({
+                    type: 'ON_USER_LOGIN',
+                    payload: response.data
+                })
+            }
+        } catch (error) {
+            dispatch({
+                type: 'ON_USER_ERROR',
+                payload: 'Login Error'
+            })
+        }
+    }
+}
+
+export const OnUserSignup = (email: string, phone: string ,password: string) => {
+    return async ( dispatch: Dispatch<UserAction>) => {
+        try {
+             const response = await axios.post<string>(`${BASE_URL}user/signup`, {
+                email,
+                phone,
+                password
+            })
+
+            if(!response){
+                dispatch({
+                    type: 'ON_USER_ERROR',
+                    payload: 'Login Error'
+                })
+            }else{
+                dispatch({
+                    type: 'ON_USER_LOGIN',
+                    payload: response.data
+                })
+            }
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type: 'ON_USER_ERROR',
+                payload: 'Login Error'
             })
         }
     }

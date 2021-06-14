@@ -7,7 +7,6 @@ interface ButtonProps{
     onRemove: Function;
  }
 
-
 const ButtonAddRemove: React.FC<ButtonProps> = ({ onAdd, qty, onRemove }) => {
     if(qty > 0){
         return (
@@ -23,7 +22,7 @@ const ButtonAddRemove: React.FC<ButtonProps> = ({ onAdd, qty, onRemove }) => {
                 </TouchableOpacity>
             </View>
         )
-    } else {
+    }else{
         return (
             <TouchableOpacity style={styles.btn} onPress={() => onAdd()}>
                 <Text style={{ fontSize: 18, color: '#FFF'}}> Add</Text>
@@ -41,8 +40,8 @@ const styles = StyleSheet.create({
         height: 40,  
         alignSelf: 'center', 
         borderRadius: 30, 
-        backgroundColor: '#f15b5b'},
-    
+        backgroundColor: '#f15b5b'
+    },
     btnPlusMinus: { 
         display: 'flex', 
         justifyContent: 'center',
@@ -51,13 +50,15 @@ const styles = StyleSheet.create({
         borderWidth: 0.5, 
         borderColor: '#f15b5d', 
         height: 58, 
-        width: 38},
-
+        width: 38
+    },
     optionsView: { 
         display: 'flex', 
         flexDirection: 'row',  
         justifyContent: 'space-between', 
-        alignItems: 'center', flex: 1},
+        alignItems: 'center', 
+        flex: 1
+    },
 })
 
 

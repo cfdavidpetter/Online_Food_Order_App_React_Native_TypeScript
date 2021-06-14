@@ -6,7 +6,7 @@ const initialState = {
     availableFoods: {} as [FoodModel]
 }
 
-const ShoppingReducer = (state: ShoppingState = initialState, action: ShoppingAction) => {
+const ShoppingReducer = (state: ShoppingState = initialState, action: ShoppingAction) => { 
     switch(action.type){
         case 'ON_AVAILABILITY':
             return {

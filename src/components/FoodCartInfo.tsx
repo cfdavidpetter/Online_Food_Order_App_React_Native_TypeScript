@@ -3,31 +3,27 @@ import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image, Dimensions 
 import { FoodModel } from '../redux'
 import { ButtonAddRemove } from './ButtonAddRemove'
 
-interface FoodCardProps{ 
+interface FoodCardInfoProps{ 
     item: FoodModel;
-    onTap: Function;
     onUpdateCart: Function;
 }
  
-const FoodCard: React.FC<FoodCardProps> = ({ item, onTap, onUpdateCart }) => {
+const FoodCardInfo: React.FC<FoodCardInfoProps> = ({ item, onUpdateCart }) => {
 
     const didUpdateCart = (unit: number) => {
         item.unit = unit;
         onUpdateCart(item);
     }
-  
+    
     return (
         <View style={styles.container}>
-            <Image source={{ uri: `${item.images[0]}`}} style={{ width: 100, height: 100, borderRadius: 20, backgroundColor: '#EAEAEA'}} /> 
-            <TouchableOpacity  
-                onPress={() => onTap(item)} 
-                style={{ display: 'flex', flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}
-                >
-                <View style={{ display: 'flex', flex: 7, padding: 10}}>
-                    <Text>{item.name}</Text>
-                    <Text>{item.category}</Text>
+            <View style={{ display: 'flex', flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                <View style={{ display: 'flex', flex: 8, padding: 10, justifyContent: 'center'}}>
+                    <Text style={{ fontSize: 20, fontWeight: '500'}}>{item.name}</Text>
+                    <Text style={{ fontSize: 16, color: '#616161'}}>{item.category}</Text>
+                    <Text style={{ fontSize: 14, color: '#616161'}}>{item.description}</Text>
                 </View>
-                <View style={{ display: 'flex', flex: 5, padding: 10, justifyContent:'space-around', alignItems: 'center'}}>
+                <View style={{ display: 'flex', flex: 4, padding: 10, justifyContent:'space-around', alignItems: 'center'}}>
                     <Text style={{ fontSize: 18, fontWeight: '600', color: '#7C7C7C'}}>₹{item.price}</Text>
                     <ButtonAddRemove 
                         onAdd={() => {
@@ -41,11 +37,10 @@ const FoodCard: React.FC<FoodCardProps> = ({ item, onTap, onUpdateCart }) => {
                         qty={item.unit} 
                     />
                 </View>
-            </TouchableOpacity> 
+            </View>
         </View>
     )
 }
-
 
 const styles = StyleSheet.create({
     container: {     
@@ -68,13 +63,13 @@ const styles = StyleSheet.create({
     body: { 
         flex: 10, 
         justifyContent: 'center', 
-        alignItems: 'center',
+        alignItems: 'center', 
         backgroundColor: 'yellow' 
     },
     footer: { 
         flex: 1, 
-        backgroundColor: 'cyan' 
+        backgroundColor: 'cyan'
     }
 })
 
-export { FoodCard }
+export { FoodCardInfo }

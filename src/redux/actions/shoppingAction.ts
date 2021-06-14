@@ -4,7 +4,6 @@ import { BASE_URL } from '../../utils'
 import { FoodAvailability, FoodModel } from '../models'
 
 //availability Action
-
 export interface AvailabilityAction{
     readonly type: 'ON_AVAILABILITY',
     payload: FoodAvailability
